@@ -95,7 +95,7 @@ with TelegramClient(name='google-bard-bot', bot_token=TOKEN, api_id=API_ID, api_
         await emval(event)
       
     @client.on(events.NewMessage(incoming=True, pattern=r"/ask (.*)"))
-    async ask(event):
+    async def ask(event):
         prompt = event.pattern_match.group(1)
         reply = await event.get_reply_message()
         if reply.photo:
@@ -109,15 +109,15 @@ with TelegramClient(name='google-bard-bot', bot_token=TOKEN, api_id=API_ID, api_
            with io.BytesIO(str.encode(ultd)) as out_file:
               out_file.name = "response.txt"
               await event.client.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                allow_cache=False,
-                caption=f"```{prompt}```" if len(prompt) < 990 else None,
-                reply_to=reply_to_id,
+                  event.chat_id,
+                  out_file,
+                  force_document=True,
+                  allow_cache=False,
+                  caption=f"```{prompt}```" if len(prompt) < 990 else None,
+                  reply_to=event.message.id,
               )
         else:
-            await xx.reply(response)
+            await event.reply(response)
         
         
 
