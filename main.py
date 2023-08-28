@@ -1,8 +1,11 @@
-import asyncio, io, sys, traceback
-from config import *
+import asyncio, os, io, sys, traceback
 from telethon import events
 from telethon.sync import TelegramClient
 from bardapi import Bard
+
+TOKEN = os.getenv('TOKEN', None)
+API_ID = int(os.getenv('API_ID', 0))
+API_HASH = os.getenv('API_HASH', None)
 
 
 async def aexec(code, event):
